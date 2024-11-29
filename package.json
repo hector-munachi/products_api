@@ -1,0 +1,9 @@
+{
+  "name": "product-service-project",
+  "version": "1.0.0",
+  "description": "Product service using Fake Store API",
+  "type": "module",
+  "scripts": {
+    "start": "echo 'Use Live Server extension in VS Code to run this project'"
+  }
+}
