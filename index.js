@@ -8,6 +8,7 @@ class ProductApp {
         this.singleProductDetails = document.getElementById('single-product-details');
         this.prevPageBtn = document.getElementById('prev-page');
         this.nextPageBtn = document.getElementById('next-page');
+        this.closeDetailsBtn = document.getElementById('close-details');
 
         this.currentPage = 1;
         this.productsPerPage = 10;
@@ -21,8 +22,7 @@ class ProductApp {
         this.prevPageBtn.addEventListener('click', () => this.changePage(-1));
         this.nextPageBtn.addEventListener('click', () => this.changePage(1));
         
-        this.productDetailsModal.querySelector('.product-details-close')
-            .addEventListener('click', () => this.hideProductDetails());
+        this.closeDetailsBtn.addEventListener('click', () => this.hideProductDetails());
     }
 
     async loadProducts() {
@@ -55,24 +55,25 @@ class ProductApp {
 
     createProductCard(product) {
         const card = document.createElement('div');
-        card.classList.add('product-card');
+        card.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'overflow-hidden', 'hover:scale-105', 'transition-transform');
         card.innerHTML = `
-            <img src="${product.image}" alt="${product.title}" class="product-card-image">
-            <div class="product-card-content">
-                <h3 class="product-card-title">${product.title}</h3>
-                <p class="product-card-price">$${product.price.toFixed(2)}</p>
-                <div class="product-card-actions">
-                    <a href="#" class="btn btn-view" data-id="${product.id}">View Details</a>
-                    <button class="btn-delete" data-id="${product.id}">
+            <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-xl font-bold text-primary mb-2">${product.title}</h3>
+                <p class="text-gray-600 font-bold mb-4">$${product.price.toFixed(2)}</p>
+                <div class="flex justify-between items-center">
+                    <a href="#" class="view-btn px-3 py-2 bg-primary text-white rounded" data-id="${product.id}">View Details</a>
+                    <button class="delete-btn text-red-500 hover:text-red-700" data-id="${product.id}">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
         `;
 
+
         // Add event listeners for view and delete
-        const viewBtn = card.querySelector('.btn-view');
-        const deleteBtn = card.querySelector('.btn-delete');
+        const viewBtn = card.querySelector('.view-btn');
+        const deleteBtn = card.querySelector('.delete-btn');
 
         viewBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -91,22 +92,24 @@ class ProductApp {
             const product = await this.productService.getProductById(productId);
             
             this.singleProductDetails.innerHTML = `
-                <h2>${product.title}</h2>
-                <img src="${product.image}" alt="${product.title}" style="max-width: 200px; margin: 20px 0;">
-                <p><strong>Price:</strong> $${product.price.toFixed(2)}</p>
-                <p><strong>Category:</strong> ${product.category}</p>
-                <p><strong>Description:</strong> ${product.description}</p>
+                <h2 class="text-2xl font-bold text-primary mb-4">${product.title}</h2>
+                <img src="${product.image}" alt="${product.title}" class="max-w-xs mx-auto my-6 rounded">
+                <p class="mb-2"><strong>Price:</strong> $${product.price.toFixed(2)}</p>
+                <p class="mb-2"><strong>Category:</strong> ${product.category}</p>
+                <p class="mb-2"><strong>Description:</strong> ${product.description}</p>
                 <p><strong>Rating:</strong> ${product.rating.rate} (${product.rating.count} reviews)</p>
             `;
 
-            this.productDetailsModal.style.display = 'flex';
+            this.productDetailsModal.classList.remove('hidden');
+            this.productDetailsModal.classList.add('flex');
         } catch (error) {
             console.error('Error fetching product details:', error);
         }
     }
 
     hideProductDetails() {
-        this.productDetailsModal.style.display = 'none';
+        this.productDetailsModal.classList.remove('flex');
+        this.productDetailsModal.classList.add('hidden');
     }
 
     async deleteProduct(productId) {

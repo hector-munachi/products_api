@@ -3,187 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog</title>
+    <title>Products Catalog</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --background-color: #f4f4f4;
-            --card-background: white;
-            --text-color: #333;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#8A4FFF',
+                            dark: '#6A29FF'
+                        },
+                        secondary: {
+                            DEFAULT: '#6A5ACD',
+                            light: '#9370DB'
+                        }
+                    }
+                }
+            }
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        #product-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            background-color: var(--card-background);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    </script>
+     <style>
+        .menu-open {
             overflow: hidden;
-            transition: transform 0.3s ease;
         }
-
-        .product-card:hover {
-            transform: scale(1.03);
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
         }
-
-        .product-card-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .product-card-content {
-            padding: 15px;
-        }
-
-        .product-card-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .product-card-price {
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-        }
-
-        .product-card-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-view {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-view:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-delete {
-            color: #e74c3c;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-delete:hover {
-            color: #c0392b;
-        }
-
-        #product-details {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .product-details-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 90%;
-            position: relative;
-        }
-
-        .product-details-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #e74c3c;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            margin: 0 5px;
-            padding: 8px 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .pagination button:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
+        
+        .mobile-menu.active {
+            transform: translateX(0);
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1 class="section-title">Product Catalog</h1>
-        <div id="product-list"></div>
-        <div class="pagination">
-            <button id="prev-page">Previous</button>
-            <button id="next-page">Next</button>
+<body class="bg-white">
+    <!-- Navigation -->
+  <nav class="fixed w-full bg-white/90 backdrop-blur-sm z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex-shrink-0">
+                <span class="text-xl font-semibold cursor-pointer">Products Catalog</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 hover:text-gray-900">Discover</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">About us</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">FAQs</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900">Contact us</a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#" class="text-gray-600 hover:text-gray-900">Log in</a>
+                <a href="#" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">Sign up</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 
-    <div id="product-details">
-        <div class="product-details-content">
-            <span class="product-details-close">&times;</span>
-            <div id="single-product-details"></div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 md:hidden">
+        <div class="flex flex-col h-full">
+            <!-- Mobile Menu Header -->
+            <div class="flex justify-between items-center p-4 border-b">
+                <span class="text-xl font-semibold">Products Catalog</span>
+                <button id="mobile-menu-close" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+           <div class="bg-white">
+             <!-- Mobile Menu Items -->
+             <div class="flex flex-col py-4">
+              <a href="#" class="px-4 py-3 text-gray-600 hover:bg-gray-50">Discover</a>
+              <a href="#" class="px-4 py-3 text-gray-600 hover:bg-gray-50">About us</a>
+              <a href="#" class="px-4 py-3 text-gray-600 hover:bg-gray-50">FAQs</a>
+              <a href="#" class="px-4 py-3 text-gray-600 hover:bg-gray-50">Contact us</a>
+          </div>
+
+          <!-- Mobile Menu Footer -->
+          <div class="mt-auto border-t p-4">
+              <div class="flex flex-col space-y-4">
+                  <a href="#" class="text-center text-gray-600 hover:text-gray-900">Log in</a>
+                  <a href="#" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 text-center">Sign up</a>
+              </div>
+          </div>
+           </div>
         </div>
     </div>
+</nav>
 
+  <!-- Hero Section -->
+  <div class="relative h-[600px]">
+      <div class="absolute inset-0">
+          <img src="" alt="Concert venue" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
+          <h1 class="text-4xl md:text-5xl text-white font-bold max-w-2xl mb-8">
+              Runway Ready: Elevate Your Style with Must-Have Accessories! Discover statement pieces that transform your look and tech game.
+        </h1>
+          <div class="flex flex-col md:flex-row gap-4 max-w-3xl bg-white p-2 rounded-lg">
+              <div class="flex-grow">
+                  <input type="text" placeholder="Search for products" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-600"/>
+              </div>
+              <div class="w-full md:w-48">
+                  <select class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-600">
+                      <option>Categories</option>
+                      <option>Clothes</option>
+                      <option>Jewelry</option>
+                      <option>Shoes</option>
+                      <option>Gadgets</option>
+                  </select>
+              </div>
+              <button class="w-full md:w-32 bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700">
+                  Search
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Trending Products Section -->
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl font-bold">Trending products</h2>
+        <a href="#" class="text-purple-600 hover:text-purple-700 flex items-center">
+            View all trending products
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+        </a>
+    </div>
+
+        <!-- Products Card  -->
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <div class="flex justify-center space-x-4 mt-8">
+            <button id="prev-page" class="px-4 py-2 bg-primary text-white rounded disabled:bg-gray-400">Previous</button>
+            <button id="next-page" class="px-4 py-2 bg-primary text-white rounded disabled:bg-gray-400">Next</button>
+        </div>
+        <!-- Products Modal -->
+        <div id="product-details" class="fixed inset-0 bg-black bg-opacity-70 hidden justify-center items-center z-50">
+            <div class="bg-white p-8 rounded-lg max-w-xl w-full relative">
+                <span id="close-details" class="absolute top-4 right-4 text-2xl text-red-500 cursor-pointer">&times;</span>
+                <div id="single-product-details"></div>
+            </div>
+        </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const body = document.body;
+  
+            function toggleMenu() {
+                mobileMenu.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            }
+  
+            mobileMenuButton.addEventListener('click', toggleMenu);
+            mobileMenuClose.addEventListener('click', toggleMenu);
+  
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = mobileMenu.contains(event.target) || 
+                                    mobileMenuButton.contains(event.target);
+                
+                if (!isClickInside && mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+  
+            // Handle escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
     <script type="module" src="index.js"></script>
 </body>
 </html>
