@@ -5,5 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "echo 'Use Live Server extension in VS Code to run this project'"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.16"
   }
 }
