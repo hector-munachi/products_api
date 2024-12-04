@@ -80,7 +80,7 @@ class ProductDetailsPage {
         productDetails.innerHTML = `
             <div class="text-center text-red-600 text-xl">
                 <p>${message}</p>
-                <a href="index.html" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">Back to Products</a>
+                <a href="index.html" class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded">Back to Products</a>
             </div>
         `;
     }
