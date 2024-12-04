@@ -7,29 +7,34 @@ class ProductDetailsPage {
     }
 
     async initPage() {
+        const loader = document.getElementById('loading-indicator');
         try {
+            // Show loader
+            loader.style.display = 'flex';
+    
             // Get product ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
-
+    
             if (!productId) {
                 this.showErrorMessage('No product ID provided');
                 return;
             }
-
+    
             // Fetch product details
             const product = await this.productService.getProductById(productId);
-            
+    
             // Populate page with product details
             this.renderProductDetails(product);
-
-            // Set current year in footer
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
         } catch (error) {
             console.error('Error loading product details:', error);
             this.showErrorMessage('Failed to load product details');
+        } finally {
+            // Hide loader
+            loader.style.display = 'none';
         }
     }
+    
 
     renderProductDetails(product) {
         // Update image
