@@ -57,7 +57,7 @@ class ProductApp {
                 <h3 class="text-xl font-bold text-primary mb-2">${product.title}</h3>
                 <p class="text-gray-600 font-bold mb-4">$${product.price.toFixed(2)}</p>
                 <div class="flex justify-between items-center">
-                    <a href="product-details.html?id=${product.id}" class="view-btn px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded">View Details</a>
+                    <a href="product-details.html?id=${product.id}" class="view-btn px-3 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded">View Details</a>
                     <button class="delete-btn text-red-500 hover:text-red-700" data-id="${product.id}">
                         <i class="fas fa-trash-alt"></i>
                     </button>
